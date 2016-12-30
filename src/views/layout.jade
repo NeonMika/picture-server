@@ -1,0 +1,17 @@
+doctype html
+html
+    head
+        title= preloadState.title
+        link(href='css/bootstrap.min.css', rel='stylesheet')
+        link(href='css/bootstrap-theme.min.css', rel='stylesheet')
+        link(href='css/site.css', rel='stylesheet')
+    body
+        block transfer
+        div
+            h1= preloadState.title
+        hr
+        div(id='nav')
+        div
+            block content
+        hr
+        h2= preloadState.owner

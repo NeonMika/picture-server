@@ -1,0 +1,23 @@
+{
+	"webServer": {
+		"port": 8080,
+		"wwwFolder": "dist/www",
+		"viewFolder": "dist/view",
+		"routeFolder": "dist/routes",
+		"uploadFolder": "./uploads/"
+	},
+	"logger": {
+		"transports": {
+			"console": {
+				"level": "debug",
+				"colorize": true,
+				"timeStamp": true
+			},
+			"file": {
+				"level": "debug",
+				"fileName": "dist/logs/server.log",
+				"timeStamp" : true
+			}
+		}
+	}
+}
