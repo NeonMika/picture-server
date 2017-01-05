@@ -61,8 +61,9 @@ gulp.task("server", function() {
 	require("./index.js");
 });
 
-gulp.task("default", ["sass", "webpack", "copy"], function () {
+gulp.task("build", ["sass", "webpack", "copy"]);
 
+gulp.task("default", ["build"], function () {
 	gulp.watch("src/www/css/site.scss", ["sass"]);
 	gulp.watch(["src/www/js/**/*.jsx","src/www/js/**/*.js"], ["webpack"]);
 	gulp.watch(["node_modules/bootstrap/dist/css/**/*"], ["copy"]);

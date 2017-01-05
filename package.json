@@ -1,5 +1,5 @@
 {
-  "name": "intro-to-react",
+  "name": "NeonMika.PictureServer",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,13 +8,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/training4developers/intro-to-react.git"
+    "url": "git+https://github.com/NeonMika/picture-server"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/training4developers/intro-to-react/issues"
-  },
+  "author": "Markus Weninger",
   "homepage": "https://github.com/training4developers/intro-to-react#readme",
   "dependencies": {
     "bootstrap": "^3.3.6",
