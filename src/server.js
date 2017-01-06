@@ -24,10 +24,10 @@ module.exports = function(options) {
 
 	let server = http.createServer(app);
 
-	app.use(/.*map$/, function(req, res) {
-		res.writeHead(404);
-		res.end();
-	});
+//	app.use(/.*map$/, function(req, res) {
+//		res.writeHead(404);
+//		res.end();
+//	});
 
 	app.use(express.static(options.webServer.wwwFolder));
 	app.use('/uploads', express.static(options.webServer.uploadFolder));

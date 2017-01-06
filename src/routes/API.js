@@ -1,4 +1,4 @@
-module.exports = function(options) {
+module.exports = function (options) {
     var express = require('express');
     var walk = require('walk'); // Directory walking
     var _ = require('underscore'); // Underscore functions (list selections, etc.)
@@ -14,15 +14,15 @@ module.exports = function(options) {
     const root = { root: path.join(__dirname, "..", "..") };
 
     function initPhotos(finallyFn) {
-        fileHelper.getFilePaths(uploadDir, function(files) {
+        fileHelper.getFilePaths(uploadDir, function (files) {
             photos = _.shuffle(files);
             lastUpdate = new Date();
-            currentPhotoId = 0;
+            currentPhotoId = photos.length > 0 ? 0 : null;
             finallyFn();
         });
     }
 
-    router.get('/currentId', function(req, res, next) {
+    router.get('/currentId', function (req, res, next) {
         const doIt = () => res.send(String(currentPhotoId));
         if (photos === null) {
             initPhotos(doIt);
@@ -31,11 +31,8 @@ module.exports = function(options) {
         }
     });
 
-    router.get('/length', function(req, res, next) {
-        //        fileHelper.getFileNumber(uploadedDir, function(n) {
-        //            res.send(n);
-        //        })
-        const doIt = () => res.send(String(photos.length - 1));
+    router.get('/imagePaths', function (req, res, next) {
+        const doIt = () => res.json(photos);
         if (photos === null) {
             initPhotos(doIt);
         } else {
@@ -43,20 +40,42 @@ module.exports = function(options) {
         }
     });
 
-    router.get('/currentImage', function(req, res, next) {
-        if (photos == null) {
+    router.get('/length', function (req, res, next) {
+        //        fileHelper.getFileNumber(uploadedDir, function(n) {
+        //            res.send(n);
+        //        })
+        const doIt = () => res.send(String(photos.length));
+        if (photos === null) {
+            initPhotos(doIt);
+        } else {
+            doIt();
+        }
+    });
+
+    router.get('/currentImage', function (req, res, next) {
+        if (photos === null) {
             // Shuffle, start at image 0
             initPhotos(() => {
-                res.sendFile(photos[currentPhotoId], root)
-                console.log("photos was null, initialized");
+                if (currentPhotoId != null) {
+                    res.sendFile(photos[currentPhotoId], root)
+                    console.log("photos was null, initialized and first image sent");
+                } else {
+                    res.send("")
+                    console.log("photos was null, initialized, but not images found");
+                }
             });
             return;
         } else {
             if (new Date() - lastUpdate >= 5000) {
-                if (currentPhotoId + 1 == photos.length) {
+                if (currentPhotoId === null || currentPhotoId + 1 == photos.length) {
                     initPhotos(() => {
-                        res.sendFile(photos[currentPhotoId], root);
-                        console.log("time passed, shuffle, output id 0");
+                        if (currentPhotoId != null) {
+                            res.sendFile(photos[currentPhotoId], root);
+                            console.log("time passed, shuffle, output id 0");
+                        } else {
+                            res.send("");
+                            console.log("time passed, shuffle, no images found");
+                        }
                     });
                     return;
                 } else {
@@ -67,7 +86,11 @@ module.exports = function(options) {
             }
 
         }
-        res.sendFile(photos[currentPhotoId], root);
+        if (currentPhotoId != null) {
+            res.sendFile(photos[currentPhotoId], root);
+        } else {
+            res.send("")
+        }
     });
 
     return router;

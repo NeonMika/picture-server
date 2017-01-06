@@ -1,5 +1,7 @@
 module.exports = function(options) {
 
+    var config = require('../config.json')
+
     var express    = require('express');
     var fs         = require('fs') // File handling
     var multer     = require('multer'); // Used for multi-part parsing
@@ -15,15 +17,15 @@ module.exports = function(options) {
     /* GET home page. */
     router.get('/', function(req, res, next) {
         fileHelper.getFilePaths(uploadDir, function(files) {
-            res.render('index', { preloadState: {title: title, owner : "", photos: files }});
+            res.render('index', { preloadState: {owner : config.owner, }});
         });
     });
 
     /* POST data */
     router.post('/', multiPartParser.array('uploadImages'), function(req, res, next) {
-        //console.log('POST files:\n' + JSON.stringify(req.files))
-        //console.log('POST files:')
-        //console.log(req.files)
+        console.log('POST files:\n' + JSON.stringify(req.files))
+        console.log('POST files:')
+        console.log(req.files)
 
         var arrayLength = req.files.length;
         var processFile = function(i, finallyFn) {
@@ -31,14 +33,14 @@ module.exports = function(options) {
             if (req.body.dir != "") {
                 mkdirp(uploadDir + '/' + req.body.dir, function(err) {
                     if(err) res.json(err)
-                    let moveToPath = path.join(uploadDir, req.body.dir, file.originalname);
+                    const moveToPath = path.join(uploadDir, req.body.dir, file.originalname);
                     fs.rename(file.path, moveToPath, function (err) {
                         if(err) res.json(err)
                         fileHelper.deleteIfDuplicate(moveToPath, uploadDir);
                     });
                 });
             } else {
-            let moveToPath = path.join(uploadDir, file.originalname);
+            const moveToPath = path.join(uploadDir, file.originalname);
             fs.rename(file.path, moveToPath, function (err) {
                 if(err) res.json(err)
                 fileHelper.deleteIfDuplicate(moveToPath, uploadDir);

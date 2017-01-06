@@ -6,12 +6,7 @@ html
         link(href='css/bootstrap-theme.min.css', rel='stylesheet')
         link(href='css/site.css', rel='stylesheet')
     body
-        block transfer
-        div
-            h1= preloadState.title
-        hr
-        div(id='nav')
-        div
+        script.
+            var preloadState = '!{JSON.stringify(preloadState)}';
+        div(class='container')
             block content
-        hr
-        h2= preloadState.owner
