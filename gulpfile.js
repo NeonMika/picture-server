@@ -68,6 +68,11 @@ gulp.task("copy", function() {
 		.pipe(sourcemaps.init())
 		.pipe(sourcemaps.write("."))
 		.pipe(gulp.dest("dist/www"));
+		
+	gulp.src("src/www/img/*")
+		.pipe(sourcemaps.init())
+		.pipe(sourcemaps.write("."))
+		.pipe(gulp.dest("dist/www/img"));
 
 	gulp.src(["src/**/*","!src/www/**/*"])
 		.pipe(sourcemaps.init())
@@ -86,7 +91,7 @@ gulp.task("default", ["build"], function () {
 	gulp.watch("src/www/css/site.scss", ["sass"]);
 	gulp.watch(["src/www/js/**/*.jsx","src/www/js/**/*.js"], ["webpack"]);
 	gulp.watch(["node_modules/bootstrap/dist/css/**/*"], ["copy"]);
-	gulp.watch(["src/www/**/*.html"], ["copy"]);
+	gulp.watch(["src/www/**/*"], ["copy"]);
 	gulp.watch(["src/**/*","!src/www/**/*"], ["copy"]);
 
 });

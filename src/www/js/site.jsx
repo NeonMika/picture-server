@@ -20,6 +20,11 @@ const
   FormControl = require('react-bootstrap').FormControl,
   HelpBlock = require('react-bootstrap').HelpBlock,
   Button = require('react-bootstrap').Button,
+  Panel = require('react-bootstrap').Panel,
+  Image = require('react-bootstrap').Image,
+
+  Row = require('react-bootstrap').Row,
+  Col = require('react-bootstrap').Col,
 
   Nav = require('react-bootstrap').Nav,
   Navbar = require('react-bootstrap').Navbar,
@@ -118,7 +123,7 @@ class PhotoUpload extends React.Component {
 
   render() {
     return (
-      <div className="photo-upload">
+      <Jumbotron>
         <h3>{this.state.message}</h3>
         <Form action="/photos" method="post" encType="multipart/form-data">
           <FieldGroup
@@ -140,7 +145,7 @@ class PhotoUpload extends React.Component {
             Submit
           </Button>
         </Form>
-      </div>
+      </Jumbotron>
     );
   }
 }
@@ -189,14 +194,20 @@ class PhotoList extends React.Component {
 
 class Photo extends React.Component {
   render() {
-    return <div>
-      <hr />
-      <p>{this.props.src}</p>
-      <img src={this.props.src} width="360" />
-      <br />
-      <a href={this.props.src}>Download</a>
-      <hr />
-    </div>
+    return (
+      <div>
+        <Panel header={this.props.src}>
+          <Row>
+            <Col xs={12} md={6}>
+              <img src={this.props.src} className="img-responsive center-block" />
+            </Col>
+            <Col xs={12} md={6}>
+              <a href={this.props.src}>Download</a>
+            </Col>
+          </Row>
+        </Panel>
+      </div>
+    )
   }
 }
 
@@ -236,11 +247,11 @@ class SlideShow extends React.Component {
     ]).then(values => {
       if (_this.running) {
         _this.setState({
-          id: values[2],
+          id: parseInt(values[2]) + 1,
           total: values[1],
           imgLocalURL: URL.createObjectURL(values[0])
         });
-        setTimeout(() => _this.loadImage(), 5000);
+        setTimeout(() => _this.loadImage(), 1000);
       }
     });
   }
