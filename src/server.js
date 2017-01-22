@@ -10,7 +10,6 @@ module.exports = function(options) {
 		express = require("express"),
 		path = require('path'),
 		index = require("./routes/index"),
-        users = require('./routes/users'),
 		photos = require('./routes/photos')(options.webServer),
 		slideshow = require('./routes/slideshow'),
         api = require('./routes/API')(options.webServer);
