@@ -32,7 +32,6 @@ module.exports = function(options) {
 	app.use('/uploads', express.static(options.webServer.uploadFolder));
 	
 	app.use('/', index);
-	app.use('/users', users);
     app.use('/photos', photos);
     app.use('/API', api);
     app.use('/slideshow', slideshow);
