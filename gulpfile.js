@@ -4,19 +4,19 @@ const
 	webpack = require("webpack-stream"),
 	gulp = require("gulp"),
 	babel = require("gulp-babel"),
-	sass = require("gulp-sass"),
+//	sass = require("gulp-sass"),
     sourcemaps = require('gulp-sourcemaps');
 
-gulp.task("sass", function() {
-	return gulp.src("src/www/css/site.scss")
-		.pipe(sourcemaps.init())
-		.pipe(sass())
-		.on("error", function() {
-			console.dir(arguments);
-		})
-		.pipe(sourcemaps.write("."))
-		.pipe(gulp.dest("dist/www/css"));
-});
+// gulp.task("sass", function() {
+//	return gulp.src("src/www/css/site.scss")
+//		.pipe(sourcemaps.init())
+//		.pipe(sass())
+//		.on("error", function() {
+//			console.dir(arguments);
+//		})
+//		.pipe(sourcemaps.write("."))
+//		.pipe(gulp.dest("dist/www/css"));
+//});
 
 gulp.task("babel", function() {
 
@@ -58,6 +58,11 @@ gulp.task("copy", function() {
 		.pipe(sourcemaps.init())
 		.pipe(sourcemaps.write("."))
 		.pipe(gulp.dest("dist/www/css"));
+
+	gulp.src("src/www/css/*")
+		.pipe(sourcemaps.init())
+		.pipe(sourcemaps.write("."))
+		.pipe(gulp.dest("dist/www/css"));
 	
 	gulp.src("node_modules/react-bootstrap/dist/**/*.js")
 		.pipe(sourcemaps.init())
@@ -85,10 +90,11 @@ gulp.task("server", function() {
 	require("./index.js");
 });
 
-gulp.task("build", ["sass", "webpack", "copy"]);
+//gulp.task("build", ["sass", "webpack", "copy"]);
+gulp.task("build", ["webpack", "copy"]);
 
 gulp.task("default", ["build"], function () {
-	gulp.watch("src/www/css/site.scss", ["sass"]);
+//	gulp.watch("src/www/css/site.scss", ["sass"]);
 	gulp.watch(["src/www/js/**/*.jsx","src/www/js/**/*.js"], ["webpack"]);
 	gulp.watch(["node_modules/bootstrap/dist/css/**/*"], ["copy"]);
 	gulp.watch(["src/www/**/*"], ["copy"]);
