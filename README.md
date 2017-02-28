@@ -12,3 +12,8 @@ Run 'gulp server'
 
 ## How to access?
 Access via http://localhost:8080/
+
+## How to set up as a systemd service on Linux?
+1.) Copy the file picture-server.service to /etc/systemd/system/
+2.) Run systemctl enable picture-server.service
+The service should start automatically after rebooting the machine.
