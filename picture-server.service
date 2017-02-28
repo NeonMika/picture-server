@@ -1,0 +1,14 @@
+[Unit]
+Description=NeonMika Picture Server
+
+[Service]
+Type=simple
+WorkingDirectory=/home/wg/git/picture-server
+ExecStart=/usr/local/bin/gulp server
+Restart=on-abnormal
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
+
