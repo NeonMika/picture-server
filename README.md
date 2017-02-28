@@ -12,6 +12,14 @@ This starts a continous build script. You can leave it running in the back while
 
 If this does not work, most likely gulp has to be installed using 'sudo npm install -g gulp'
 
+## How to configure?
+
+Edit src/config.json.
+
+You can edit following fields:
+
+owner: The owner that should be shown on the page
+
 ## How to run?
 
 Run 'gulp server'
